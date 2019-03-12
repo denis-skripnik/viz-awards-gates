@@ -1,0 +1,29 @@
+{
+  "name": "viz-awards-gates",
+  "version": "1.0.0",
+  "description": "NPM package for Awards gates in VIZ blockchain",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denis-skripnik/viz-awards-gates.git"
+  },
+  "keywords": [
+    "viz",
+    "gates",
+    "awards",
+    "blockchain",
+    "package",
+    "apps",
+    "services"
+  ],
+  "author": "denis-skripnik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denis-skripnik/viz-awards-gates/issues"
+  },
+  "homepage": "https://github.com/denis-skripnik/viz-awards-gates#readme",
+  "dependencies": {
+    "nedb": "^1.8.0",
+    "viz-js-lib": "latest"
+  }
+}
