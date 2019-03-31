@@ -1,6 +1,6 @@
 {
   "name": "viz-awards-gates",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NPM package for Awards gates in VIZ blockchain",
   "main": "index.js",
   "repository": {
