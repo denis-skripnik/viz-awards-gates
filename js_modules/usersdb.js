@@ -14,9 +14,9 @@ var Datastore = require('nedb')
     });
 }
 
-function updateUser(user, balance) {
+function updateUser(user, viz_account, balance) {
   return new Promise((resolve, reject) => {
-  db.update({user}, {user, balance}, {upsert:true}, (err, result) => {
+  db.update({user}, {user, viz_account, balance}, {upsert:true}, (err, result) => {
 if (err) {
   reject(err);
 } else {

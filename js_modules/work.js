@@ -17,7 +17,7 @@ balance = shares;
 }
 
 try {
-await udb.updateUser(service_user, balance);
+await udb.updateUser(service_user, '', balance);
 return 1;
 } catch(error) {
 return 0;
