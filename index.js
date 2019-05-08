@@ -6,11 +6,18 @@ const conf = require('./config.json');
 const bdb = require("./js_modules/blocksdb");
 const LONG_DELAY = 12000;
 const SHORT_DELAY = 3000;
+const SUPER_LONG_DELAY = 1000 * 60 * 15;
+
+let PROPS = null;
+
+let bn = 0;
+let last_bn = 0;
+let delay = SHORT_DELAY;
 
 async function getAwards() {
-    let PROPS = await methods.getProps();
+    PROPS = await methods.getProps();
             const block_n = await bdb.getBlock(PROPS.last_irreversible_block_num);
-let bn = block_n.last_block;
+bn = block_n.last_block;
 
 delay = SHORT_DELAY;
 while (true) {
@@ -34,6 +41,18 @@ while (true) {
         }
     }
 }
+
+    setInterval(() => {
+        if(last_bn == bn) {
+    
+            try {
+                    process.exit(1);
+            } catch(e) {
+                process.exit(1);
+            }
+        }
+        last_bn = bn;
+    }, SUPER_LONG_DELAY);
 
 async function addVizAccount(user, viz_login) {
         let user_data = await udb.getUser(user);
