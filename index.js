@@ -129,9 +129,11 @@ try {
     let regAction = await methods.reg(viz_login, user_data.balance);
     if (regAction === true) {
     await udb.updateUser(user, viz_login, 0);
-    }    
-    let json = {code: 1, message: 'Ok'};
-        return JSON.stringify(json);
+return regAction.key;
+}     else {
+    let json = {code: -1, error: regAction.msg};
+    return JSON.stringify(json);
+}
         } catch(e) {
 let json = {code: -1, error: e};
         return JSON.stringify(json);
