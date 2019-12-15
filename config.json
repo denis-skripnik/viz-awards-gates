@@ -1,5 +1,6 @@
 {
   "service": "youtube",
   "login": "viz-user",
+"regular_key": "5J",
   "active_key": "5K"
  }

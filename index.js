@@ -70,8 +70,9 @@ let json = {code: -1, error: e};
         }
 			}
 
-async function withdraw(user, amount) {
+async function withdraw(user, amount, mode) {
     amount = amount.toFixed(6);
+    amount = parseFloat(amount);
     try {
         let user_data = await udb.getUser(user);
         if (user_data) {
@@ -86,8 +87,12 @@ async function withdraw(user, amount) {
             if (account[0].balance >= viz_amount) {
             viz_amount += ' VIZ';
             await udb.updateUser(user, user_data.viz_account, balance);
-await methods.transfer(conf.active_key, conf.login, user_data.viz_account, viz_amount, 'withdraw completed. Service: ' + conf.service);
-let json = {code: 1, message: 'Ok'};
+if (mode === 'to_balance') {
+            await methods.transfer(conf.active_key, conf.login, user_data.viz_account, viz_amount, 'withdraw completed. Service: ' + conf.service);
+} else if (mode === 'to_shares') {
+    await methods.transferToVesting(conf.active_key, conf.login, user_data.viz_account, viz_amount);
+}
+            let json = {code: 1, message: 'Ok'};
 return JSON.stringify(json);
 }     else {
     let json = {code: 0, error: 'The amount is greater than the existing account gateway.'};
@@ -117,9 +122,30 @@ shares += ' SHARES';
 await methods.withdrawVesting(conf.active_key, conf.login, shares);
 }
 
+async function userRegistration(user, viz_login) {
+    let user_data = await udb.getUser(user);
+    if (user_data) {
+try {
+    let regAction = await methods.reg(viz_login, user_data.balance);
+    if (regAction === true) {
+    await udb.updateUser(user, viz_login, 0);
+    }    
+    let json = {code: 1, message: 'Ok'};
+        return JSON.stringify(json);
+        } catch(e) {
+let json = {code: -1, error: e};
+        return JSON.stringify(json);
+}
+    } else {
+        let json = {code: 0, error: 'No user in database.'};
+    }
+}
+
 setInterval(() => withdrawShares(), 86400000);
+setInterval(() => methods.awardMe(), 450000);
 
 module.exports.getAwards = getAwards;
 module.exports.addVizAccount = addVizAccount;
 module.exports.withdraw = withdraw;
 module.exports.search = udb.getUser;
+module.exports.userRegistration = userRegistration;
